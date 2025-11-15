@@ -1,0 +1,31 @@
+name: Multi Bot Runner
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"   # हर 6 घंटे auto restart (optional)
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pyTelegramBotAPI
+
+      - name: Run Multi Bot
+        run: |
+          python land.py
+
+    timeout-minutes: 999999
